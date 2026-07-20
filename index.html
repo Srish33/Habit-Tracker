@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow - Neomorphic Habit Tracker</title>
+    <!-- Google Fonts: Outfit for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="logo-icon neomorphic-flat">
+                    <i data-lucide="activity" class="icon-primary"></i>
+                </div>
+                <h1>HabitFlow</h1>
+            </div>
+            <p class="subtitle">Shape your daily routine, softly.</p>
+        </header>
+
+        <main class="app-content">
+            <!-- ================= DASHBOARD SCREEN ================= -->
+            <section id="dashboard-screen" class="screen">
+                <div class="dashboard-grid">
+                    <!-- Left Column: Calendar Dashboard -->
+                    <div class="card-section calendar-section">
+                        <div class="section-header">
+                            <h2>Monthly Progress</h2>
+                            <div class="calendar-controls">
+                                <button id="main-prev-month" class="btn-icon neomorphic-flat" aria-label="Previous Month">
+                                    <i data-lucide="chevron-left"></i>
+                                </button>
+                                <span id="main-month-year" class="calendar-title">July 2026</span>
+                                <button id="main-next-month" class="btn-icon neomorphic-flat" aria-label="Next Month">
+                                    <i data-lucide="chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="neomorphic-card calendar-card">
+                            <div class="calendar-weekdays">
+                                <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
+                            </div>
+                            <div id="main-calendar-days" class="calendar-days">
+                                <!-- Calendar days injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Habits Lists -->
+                    <div class="habits-column">
+                        <!-- Selected Date's Habits -->
+                        <div class="card-section">
+                            <div class="section-header">
+                                <h3 id="selected-date-title">Habits for Jul 20, 2026</h3>
+                            </div>
+                            <div id="selected-date-habits" class="habits-list">
+                                <!-- Habit items for selected date injected dynamically -->
+                                <div class="empty-state">
+                                    <i data-lucide="calendar-days"></i>
+                                    <p>No habits scheduled for this day.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Today's Checklist -->
+                        <div class="card-section">
+                            <div class="section-header">
+                                <h3>Today's Focus</h3>
+                            </div>
+                            <div id="todays-habits" class="habits-list">
+                                <!-- Habits for today injected dynamically -->
+                                <div class="empty-state">
+                                    <i data-lucide="smile"></i>
+                                    <p>All done, or no habits scheduled for today!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Add Button -->
+                <button id="add-habit-fab" class="fab-btn neomorphic-flat" aria-label="Add Habit">
+                    <i data-lucide="plus"></i>
+                </button>
+            </section>
+
+            <!-- ================= HABIT DETAIL SCREEN ================= -->
+            <section id="detail-screen" class="screen hidden">
+                <div class="detail-header-nav">
+                    <button id="detail-back-btn" class="btn-text neomorphic-flat">
+                        <i data-lucide="arrow-left"></i> Back to Dashboard
+                    </button>
+                    <div class="detail-actions">
+                        <button id="edit-habit-btn" class="btn-icon neomorphic-flat edit-btn" aria-label="Edit Habit">
+                            <i data-lucide="edit-3"></i>
+                        </button>
+                        <button id="delete-habit-btn" class="btn-icon neomorphic-flat delete-btn" aria-label="Delete Habit">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <!-- Left Side: Detail Calendar / Heatmap -->
+                    <div class="card-section calendar-section">
+                        <div class="section-header">
+                            <h2>Completion History</h2>
+                            <div class="calendar-controls">
+                                <button id="detail-prev-month" class="btn-icon neomorphic-flat" aria-label="Previous Month">
+                                    <i data-lucide="chevron-left"></i>
+                                </button>
+                                <span id="detail-month-year" class="calendar-title">July 2026</span>
+                                <button id="detail-next-month" class="btn-icon neomorphic-flat" aria-label="Next Month">
+                                    <i data-lucide="chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="neomorphic-card calendar-card">
+                            <div class="calendar-weekdays">
+                                <div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div><div>Su</div>
+                            </div>
+                            <div id="detail-calendar-days" class="calendar-days detail-view-calendar">
+                                <!-- Completion heatmap injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Details Info -->
+                    <div class="detail-info-section">
+                        <div class="neomorphic-card detail-info-card">
+                            <div class="habit-detail-meta">
+                                <h2 id="detail-habit-name" class="detail-title">Habit Name</h2>
+                                <div class="stats-row">
+                                    <div class="stat-box neomorphic-inset">
+                                        <span class="stat-num" id="stat-streak">0</span>
+                                        <span class="stat-lbl">Day Streak</span>
+                                    </div>
+                                    <div class="stat-box neomorphic-inset">
+                                        <span class="stat-num" id="stat-total">0</span>
+                                        <span class="stat-lbl">Total Times Done</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="divider">
+
+                            <div class="info-group">
+                                <h4>Description</h4>
+                                <p id="detail-habit-desc" class="detail-desc">No description provided.</p>
+                            </div>
+
+                            <hr class="divider">
+
+                            <div class="info-group">
+                                <h4>Schedule</h4>
+                                <div class="schedule-badge-container">
+                                    <div class="schedule-banner neomorphic-inset">
+                                        <i data-lucide="clock" class="icon-secondary"></i>
+                                        <span id="detail-habit-schedule">Every Mon, Wed, Fri at 08:30 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ================= ADD / EDIT HABIT DIALOG (MODAL) ================= -->
+        <div id="habit-modal" class="modal-overlay hidden">
+            <div class="modal-card neomorphic-flat">
+                <div class="modal-header">
+                    <h3 id="modal-title">Create New Habit</h3>
+                    <button id="modal-close-btn" class="btn-icon neomorphic-flat" aria-label="Close">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <form id="habit-form" class="modal-body">
+                    <input type="hidden" id="habit-id">
+                    
+                    <div class="form-group">
+                        <label for="habit-name">Habit Name</label>
+                        <input type="text" id="habit-name" required placeholder="e.g., Read Books, Morning Gym" autocomplete="off" class="neomorphic-inset">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habit-desc">Description</label>
+                        <textarea id="habit-desc" rows="3" placeholder="What is your motivation, or what does this habit involve?" class="neomorphic-inset"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Days of the Week</label>
+                        <div class="weekday-selector">
+                            <input type="checkbox" id="day-mon" name="weekdays" value="1" class="day-checkbox">
+                            <label for="day-mon" class="day-label neomorphic-flat">M</label>
+                            
+                            <input type="checkbox" id="day-tue" name="weekdays" value="2" class="day-checkbox">
+                            <label for="day-tue" class="day-label neomorphic-flat">T</label>
+                            
+                            <input type="checkbox" id="day-wed" name="weekdays" value="3" class="day-checkbox">
+                            <label for="day-wed" class="day-label neomorphic-flat">W</label>
+                            
+                            <input type="checkbox" id="day-thu" name="weekdays" value="4" class="day-checkbox">
+                            <label for="day-thu" class="day-label neomorphic-flat">T</label>
+                            
+                            <input type="checkbox" id="day-fri" name="weekdays" value="5" class="day-checkbox">
+                            <label for="day-fri" class="day-label neomorphic-flat">F</label>
+                            
+                            <input type="checkbox" id="day-sat" name="weekdays" value="6" class="day-checkbox">
+                            <label for="day-sat" class="day-label neomorphic-flat">S</label>
+                            
+                            <input type="checkbox" id="day-sun" name="weekdays" value="0" class="day-checkbox">
+                            <label for="day-sun" class="day-label neomorphic-flat">S</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habit-time">Scheduled Time</label>
+                        <input type="time" id="habit-time" required class="neomorphic-inset">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="cancel-habit-btn" class="btn-secondary neomorphic-flat">Cancel</button>
+                        <button type="submit" id="save-habit-btn" class="btn-primary neomorphic-flat">Save Habit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Logic script -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+/* ================= GLOBAL RESETS & THEME VARIABLES ================= */
+:root {
+    --bg-color: #e0e8f0;
+    --text-primary: #3a4759;
+    --text-secondary: #6b7a90;
+    --text-light: #8e9eab;
+    
+    /* Shadows for Neomorphism */
+    --shadow-light: #ffffff;
+    --shadow-dark: #b5c3d0;
+    
+    /* Colors (Soft, desaturated, neomorphic-friendly - NO NEON ACCENTS) */
+    --color-primary: #6c7e96;
+    --color-primary-light: #8295ad;
+    --color-success: #7ca88a;
+    --color-success-dark: #628e70;
+    --color-danger: #c78383;
+    --color-danger-dark: #ac6767;
+    --color-today: #738ca6;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ================= NEOMORPHIC UTILITIES ================= */
+.neomorphic-flat {
+    background: var(--bg-color);
+    box-shadow: 6px 6px 12px var(--shadow-dark), 
+                -6px -6px 12px var(--shadow-light);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.neomorphic-flat:hover {
+    box-shadow: 4px 4px 8px var(--shadow-dark), 
+                -4px -4px 8px var(--shadow-light);
+    transform: translateY(-1px);
+}
+
+.neomorphic-flat:active {
+    box-shadow: inset 4px 4px 8px var(--shadow-dark), 
+                inset -4px -4px 8px var(--shadow-light);
+    transform: translateY(0);
+}
+
+.neomorphic-inset {
+    background: var(--bg-color);
+    box-shadow: inset 4px 4px 8px var(--shadow-dark), 
+                inset -4px -4px 8px var(--shadow-light);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    outline: none;
+    transition: box-shadow var(--transition-fast);
+}
+
+.neomorphic-card {
+    background: var(--bg-color);
+    box-shadow: 8px 8px 16px var(--shadow-dark), 
+                -8px -8px 16px var(--shadow-light);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+
+/* ================= APP LAYOUT ================= */
+.app-container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* App Header */
+.app-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.icon-primary {
+    color: var(--color-primary);
+    width: 22px;
+    height: 22px;
+}
+
+.icon-secondary {
+    color: var(--text-secondary);
+    width: 18px;
+    height: 18px;
+}
+
+.app-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Screen Toggle system */
+.screen {
+    opacity: 1;
+    transition: opacity var(--transition-normal);
+}
+
+.screen.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+/* ================= DASHBOARD SCREEN GRID ================= */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2.5rem;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.card-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 42px;
+}
+
+.section-header h2, .section-header h3 {
+    font-size: 1.3rem;
+}
+
+/* ================= MONTHLY CALENDAR ================= */
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.calendar-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    min-width: 110px;
+    text-align: center;
+}
+
+.btn-icon {
+    width: 38px;
+    height: 38px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--text-primary);
+}
+
+.btn-icon i {
+    width: 18px;
+    height: 18px;
+}
+
+.calendar-card {
+    padding: 1.5rem;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.6rem;
+}
+
+/* Calendar Day Button */
+.calendar-day-btn {
+    aspect-ratio: 1;
+    border: none;
+    background: var(--bg-color);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 6px var(--shadow-dark), 
+                -3px -3px 6px var(--shadow-light);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: all var(--transition-fast);
+}
+
+.calendar-day-btn:hover {
+    box-shadow: 2px 2px 4px var(--shadow-dark), 
+                -2px -2px 4px var(--shadow-light);
+}
+
+.calendar-day-btn:active {
+    box-shadow: inset 2px 2px 4px var(--shadow-dark), 
+                inset -2px -2px 4px var(--shadow-light);
+}
+
+/* Empty day slot spacer */
+.calendar-day-empty {
+    aspect-ratio: 1;
+    pointer-events: none;
+}
+
+/* Day State Modifications */
+.calendar-day-btn.selected {
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), 
+                inset -3px -3px 6px var(--shadow-light);
+    font-weight: 700;
+    border: 1px solid var(--text-light);
+}
+
+.calendar-day-btn.today {
+    color: var(--color-primary);
+    font-weight: 700;
+    position: relative;
+}
+.calendar-day-btn.today::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+}
+
+/* Scheduled habits indicators on main calendar */
+.calendar-day-dots {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    position: absolute;
+    bottom: 6px;
+    width: 80%;
+    height: 4px;
+}
+
+.calendar-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--text-light);
+}
+
+.calendar-dot.completed {
+    background-color: var(--color-success);
+}
+
+/* Heatmap Calendar cell style (specific habit details view) */
+.detail-view-calendar .calendar-day-btn.completed {
+    background-color: var(--color-success);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: inset 3px 3px 6px var(--color-success-dark), 
+                -1px -1px 3px var(--shadow-light);
+}
+.detail-view-calendar .calendar-day-btn.completed:hover {
+    box-shadow: inset 2px 2px 4px var(--color-success-dark);
+}
+
+/* ================= HABIT LIST ITEMS ================= */
+.habits-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.habits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-height: 80px;
+}
+
+.habit-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.4rem;
+    cursor: pointer;
+}
+
+.habit-info-clickable {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-right: 1rem;
+}
+
+.habit-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.habit-time-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Done/Not Done toggle button (PHYSICAL FEEDBACK NEOMORPHISM) */
+.btn-toggle-done {
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.6rem 1.1rem;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 105px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 8px var(--shadow-dark), 
+                -4px -4px 8px var(--shadow-light);
+    background-color: var(--bg-color);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: all var(--transition-fast);
+}
+
+.btn-toggle-done:hover {
+    box-shadow: 2px 2px 4px var(--shadow-dark), 
+                -2px -2px 4px var(--shadow-light);
+}
+
+/* Completed/Pressed State */
+.btn-toggle-done.done {
+    box-shadow: inset 4px 4px 8px var(--color-success-dark),
+                inset -2px -2px 6px rgba(255, 255, 255, 0.2),
+                2px 2px 5px var(--shadow-dark);
+    background-color: var(--color-success);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-toggle-done.done:hover {
+    box-shadow: inset 3px 3px 6px var(--color-success-dark),
+                2px 2px 4px var(--shadow-dark);
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 2rem;
+    border: 2px dashed var(--shadow-dark);
+    border-radius: 16px;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.empty-state i {
+    width: 32px;
+    height: 32px;
+}
+
+.empty-state p {
+    font-size: 0.9rem;
+}
+
+/* ================= FLOATING ACTION BUTTON (FAB) ================= */
+.fab-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    z-index: 99;
+}
+
+.fab-btn i {
+    width: 28px;
+    height: 28px;
+    transition: transform var(--transition-fast);
+}
+
+.fab-btn:hover i {
+    transform: rotate(90deg);
+}
+
+/* ================= HABIT DETAIL SCREEN ================= */
+.detail-header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    background: var(--bg-color);
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.edit-btn:hover i {
+    color: var(--color-primary-light);
+}
+
+.delete-btn:hover i {
+    color: var(--color-danger);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2.5rem;
+}
+
+@media (max-width: 900px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.detail-info-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.habit-detail-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.detail-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.stat-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.stat-lbl {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+.divider {
+    border: none;
+    height: 2px;
+    background: var(--shadow-dark);
+    box-shadow: 0 1px 0 var(--shadow-light);
+    margin: 0.5rem 0;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-group h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+}
+
+.detail-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.schedule-badge-container {
+    margin-top: 0.3rem;
+}
+
+.schedule-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* ================= MODAL DIALOGS ================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(224, 232, 240, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1.5rem;
+    opacity: 1;
+    transition: opacity var(--transition-normal);
+}
+
+.modal-overlay.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: modalScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalScaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.4rem;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="time"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-light);
+}
+
+/* Weekday Selector Checkbox Grid */
+.weekday-selector {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-top: 0.2rem;
+}
+
+.day-checkbox {
+    display: none; /* Hide standard checkbox */
+}
+
+.day-label {
+    flex: 1;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.day-label:hover {
+    color: var(--text-primary);
+}
+
+/* Checked State on neomorphic days */
+.day-checkbox:checked + .day-label {
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), 
+                inset -3px -3px 6px var(--shadow-light);
+    color: var(--color-primary);
+    font-weight: 800;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 0.8rem;
+}
+
+.modal-footer button {
+    padding: 0.8rem 1.6rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: var(--bg-color);
+    color: var(--text-secondary);
+}
+
+.btn-primary {
+    background-color: var(--bg-color);
+    color: var(--color-primary);
+}
+
+.btn-primary:active {
+    color: var(--color-primary-light);
+}
