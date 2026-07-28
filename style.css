@@ -1,36 +1,56 @@
 /* ================= GLOBAL RESETS & THEME VARIABLES ================= */
+/* Central CSS Custom Properties (Variables) defining color palettes, neomorphic shadows, typography, and animation timings */
 :root {
-    --bg-color: #e0e8f0;
-    --text-primary: #3a4759;
-    --text-secondary: #6b7a90;
-    --text-light: #8e9eab;
+    /* Main Background & Text Color Hierarchy */
+    --bg-color: #e0e8f0;             /* Soft grayish-blue background tailored for neomorphic shadows */
+    --text-primary: #3a4759;         /* Dark slate tone for high-contrast, legible headings & primary text */
+    --text-secondary: #6b7a90;       /* Medium slate tone for subtitles, labels, and icons */
+    --text-light: #8e9eab;           /* Light muted slate for placeholder text and disabled states */
     
-    /* Shadows for Neomorphism */
-    --shadow-light: #ffffff;
-    --shadow-dark: #b5c3d0;
+    /* Dual Shadows for Neomorphic (Soft 3D) Effect */
+    --shadow-light: #ffffff;         /* Highlights cast on upper-left edges (simulates top-left light source) */
+    --shadow-dark: #b5c3d0;          /* Soft drop shadows cast on lower-right edges */
     
-    /* Colors (Soft, desaturated, neomorphic-friendly - NO NEON ACCENTS) */
-    --color-primary: #6c7e96;
-    --color-primary-light: #8295ad;
-    --color-success: #7ca88a;
-    --color-success-dark: #628e70;
-    --color-danger: #c78383;
-    --color-danger-dark: #ac6767;
-    --color-today: #738ca6;
+    /* Harmonious State & Accent Colors */
+    --color-primary: #6c7e96;        /* Primary accent slate-blue */
+    --color-primary-light: #8295ad;  /* Lighter blue for hover states */
+    --color-success: #7ca88a;        /* Soft sage green for completed habits and positive indicators */
+    --color-success-dark: #628e70;   /* Darker sage green for inset shadow depth on completed items */
+    --color-danger: #c78383;         /* Soft muted rose red for destructive actions (e.g. Delete button) */
+    --color-danger-dark: #ac6767;    /* Darker rose shade for active state of delete button */
+    --color-today: #738ca6;          /* Distinct indicator tint for today's date highlight */
     
-    /* Transitions */
+    /* Smooth Transition Duration Utilities */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
 }
 
+/* Dark Mode Variables Override */
+body.dark-mode {
+    --bg-color: #1b1e23;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-light: #64748b;
+    --shadow-light: #262a30;
+    --shadow-dark: #101216;
+    --color-primary: #8295ad;
+    --color-primary-light: #9db2cc;
+    --color-success: #5c886a;
+    --color-success-dark: #3f6048;
+    --color-danger: #af6b6b;
+    --color-danger-dark: #814646;
+}
+
+/* Universal Reset: Standardizes box sizing, removes default margins/paddings, sets default font */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent; /* Removes touch highlight box on mobile webkit browsers */
 }
 
+/* Base Body Styling: Full viewport height container centered horizontally with horizontal overflow hidden */
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
@@ -39,36 +59,43 @@ body {
     display: flex;
     justify-content: center;
     overflow-x: hidden;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
+/* Headings Typography: Uses 'Outfit' geometric font for modern aesthetic headers */
 h1, h2, h3, h4 {
     font-family: 'Outfit', sans-serif;
     color: var(--text-primary);
     font-weight: 600;
 }
 
-/* ================= NEOMORPHIC UTILITIES ================= */
+/* ================= NEOMORPHIC UTILITY CLASSES ================= */
+
+/* 1. Neomorphic Flat Surface: Extruded card/button floating above background using dual light/dark shadows */
 .neomorphic-flat {
     background: var(--bg-color);
     box-shadow: 6px 6px 12px var(--shadow-dark), 
                 -6px -6px 12px var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle top-left light border highlight */
     border-radius: 16px;
     transition: box-shadow var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
 }
 
+/* Hover state: Slightly shrinks outer shadows to simulate floating closer to surface */
 .neomorphic-flat:hover {
     box-shadow: 4px 4px 8px var(--shadow-dark), 
                 -4px -4px 8px var(--shadow-light);
     transform: translateY(-1px);
 }
 
+/* Active (Pressed) state: Inverts outer shadows to inset inner shadows, creating physical push-button feedback */
 .neomorphic-flat:active {
     box-shadow: inset 4px 4px 8px var(--shadow-dark), 
                 inset -4px -4px 8px var(--shadow-light);
     transform: translateY(0);
 }
 
+/* 2. Neomorphic Inset Surface: Sunken / carved recessed surface for input fields and stat boxes */
 .neomorphic-inset {
     background: var(--bg-color);
     box-shadow: inset 4px 4px 8px var(--shadow-dark), 
@@ -79,6 +106,7 @@ h1, h2, h3, h4 {
     transition: box-shadow var(--transition-fast);
 }
 
+/* 3. Neomorphic Large Container Card: Generous padding and prominent soft elevation shadows */
 .neomorphic-card {
     background: var(--bg-color);
     box-shadow: 8px 8px 16px var(--shadow-dark), 
@@ -88,7 +116,7 @@ h1, h2, h3, h4 {
     padding: 1.5rem;
 }
 
-/* ================= APP LAYOUT ================= */
+/* ================= APP LAYOUT CONTAINER ================= */
 .app-container {
     width: 100%;
     max-width: 1100px;
@@ -97,12 +125,19 @@ h1, h2, h3, h4 {
     gap: 2rem;
 }
 
-/* App Header */
+/* App Header & Branding */
 .app-header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
     padding-bottom: 1rem;
+    width: 100%;
+}
+
+.header-main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .brand {
@@ -143,24 +178,27 @@ h1, h2, h3, h4 {
     font-size: 0.95rem;
 }
 
-/* Screen Toggle system */
+/* Screen View Transition Logic */
 .screen {
     opacity: 1;
     transition: opacity var(--transition-normal);
 }
 
+/* Utility class to instantly hide screens when switching views */
 .screen.hidden {
     display: none !important;
     opacity: 0;
 }
 
 /* ================= DASHBOARD SCREEN GRID ================= */
+/* Asymmetric 2-column layout: Calendar section (1.2fr width) and Habits list column (1fr width) */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 2.5rem;
 }
 
+/* Mobile & Tablet Responsive Fallback: Stacks grid columns vertically on screens narrower than 900px */
 @media (max-width: 900px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
@@ -186,7 +224,7 @@ h1, h2, h3, h4 {
     font-size: 1.3rem;
 }
 
-/* ================= MONTHLY CALENDAR ================= */
+/* ================= MONTHLY CALENDAR STYLING ================= */
 .calendar-controls {
     display: flex;
     align-items: center;
@@ -201,6 +239,7 @@ h1, h2, h3, h4 {
     text-align: center;
 }
 
+/* Circular Neomorphic Icon Buttons (Month navigation chevrons) */
 .btn-icon {
     width: 38px;
     height: 38px;
@@ -222,6 +261,7 @@ h1, h2, h3, h4 {
     padding: 1.5rem;
 }
 
+/* 7-Column Weekday Header Grid (Monday through Sunday) */
 .calendar-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -232,13 +272,14 @@ h1, h2, h3, h4 {
     margin-bottom: 1rem;
 }
 
+/* 7-Column Days Cell Grid */
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0.6rem;
 }
 
-/* Calendar Day Button */
+/* Individual Calendar Day Button: Square aspect ratio with neomorphic depth */
 .calendar-day-btn {
     aspect-ratio: 1;
     border: none;
@@ -269,13 +310,13 @@ h1, h2, h3, h4 {
                 inset -2px -2px 4px var(--shadow-light);
 }
 
-/* Empty day slot spacer */
+/* Blank spacer element to align the 1st of the month under the correct weekday column */
 .calendar-day-empty {
     aspect-ratio: 1;
     pointer-events: none;
 }
 
-/* Day State Modifications */
+/* Selected Date Highlight State: Sunken inner shadow highlight */
 .calendar-day-btn.selected {
     box-shadow: inset 3px 3px 6px var(--shadow-dark), 
                 inset -3px -3px 6px var(--shadow-light);
@@ -283,6 +324,7 @@ h1, h2, h3, h4 {
     border: 1px solid var(--text-light);
 }
 
+/* Today's Date Highlight State: Primary colored text with a small dot below */
 .calendar-day-btn.today {
     color: var(--color-primary);
     font-weight: 700;
@@ -298,7 +340,7 @@ h1, h2, h3, h4 {
     background-color: var(--color-primary);
 }
 
-/* Scheduled habits indicators on main calendar */
+/* Mini Dot Container for scheduled/completed habit indicators on calendar cells */
 .calendar-day-dots {
     display: flex;
     justify-content: center;
@@ -309,6 +351,7 @@ h1, h2, h3, h4 {
     height: 4px;
 }
 
+/* Incomplete Habit Indicator Dot */
 .calendar-dot {
     width: 4px;
     height: 4px;
@@ -316,11 +359,12 @@ h1, h2, h3, h4 {
     background-color: var(--text-light);
 }
 
+/* Completed Habit Indicator Dot (Green) */
 .calendar-dot.completed {
     background-color: var(--color-success);
 }
 
-/* Heatmap Calendar cell style (specific habit details view) */
+/* Heatmap Calendar Cell (Habit detail screen completion history) */
 .detail-view-calendar .calendar-day-btn.completed {
     background-color: var(--color-success);
     color: white;
@@ -346,6 +390,7 @@ h1, h2, h3, h4 {
     min-height: 80px;
 }
 
+/* Habit Card Item */
 .habit-card {
     display: flex;
     align-items: center;
@@ -376,7 +421,7 @@ h1, h2, h3, h4 {
     color: var(--text-secondary);
 }
 
-/* Done/Not Done toggle button (PHYSICAL FEEDBACK NEOMORPHISM) */
+/* Interactive Habit Done/Not Done Toggle Button with Tactile Physical Press Effect */
 .btn-toggle-done {
     border: none;
     cursor: pointer;
@@ -404,7 +449,7 @@ h1, h2, h3, h4 {
                 -2px -2px 4px var(--shadow-light);
 }
 
-/* Completed/Pressed State */
+/* Pressed Green State when Habit is Completed */
 .btn-toggle-done.done {
     box-shadow: inset 4px 4px 8px var(--color-success-dark),
                 inset -2px -2px 6px rgba(255, 255, 255, 0.2),
@@ -419,7 +464,7 @@ h1, h2, h3, h4 {
                 2px 2px 4px var(--shadow-dark);
 }
 
-/* Empty State */
+/* Empty State Container (Dashed border placeholder when no habits are present) */
 .empty-state {
     display: flex;
     flex-direction: column;
@@ -443,6 +488,7 @@ h1, h2, h3, h4 {
 }
 
 /* ================= FLOATING ACTION BUTTON (FAB) ================= */
+/* Fixed floating button at lower right to trigger the Add Habit modal */
 .fab-btn {
     position: fixed;
     bottom: 2rem;
@@ -466,11 +512,12 @@ h1, h2, h3, h4 {
     transition: transform var(--transition-fast);
 }
 
+/* Hover rotation animation on plus icon */
 .fab-btn:hover i {
     transform: rotate(90deg);
 }
 
-/* ================= HABIT DETAIL SCREEN ================= */
+/* ================= HABIT DETAIL SCREEN STYLING ================= */
 .detail-header-nav {
     display: flex;
     justify-content: space-between;
@@ -539,6 +586,7 @@ h1, h2, h3, h4 {
     letter-spacing: -0.5px;
 }
 
+/* 2-Column Statistics Display Grid (Streak and Lifetime Count) */
 .stats-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -608,7 +656,8 @@ h1, h2, h3, h4 {
     color: var(--text-primary);
 }
 
-/* ================= MODAL DIALOGS ================= */
+/* ================= MODAL DIALOG STYLING ================= */
+/* Full screen translucent background backdrop overlay with modern blur filter */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -631,6 +680,7 @@ h1, h2, h3, h4 {
     opacity: 0;
 }
 
+/* Modal Card Box with spring scaling entry animation */
 .modal-card {
     width: 100%;
     max-width: 500px;
@@ -642,6 +692,7 @@ h1, h2, h3, h4 {
     animation: modalScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Keyframes scale up entrance animation */
 @keyframes modalScaleUp {
     from {
         transform: scale(0.9);
@@ -681,6 +732,7 @@ h1, h2, h3, h4 {
     color: var(--text-secondary);
 }
 
+/* Form Inputs & Textarea reset to transparent inside neomorphic-inset fields */
 .form-group input[type="text"],
 .form-group textarea,
 .form-group input[type="time"] {
@@ -704,10 +756,12 @@ h1, h2, h3, h4 {
     margin-top: 0.2rem;
 }
 
+/* Hides native browser checkboxes so custom labels can act as toggle buttons */
 .day-checkbox {
-    display: none; /* Hide standard checkbox */
+    display: none;
 }
 
+/* Custom Day Label behaving as interactive neomorphic button */
 .day-label {
     flex: 1;
     aspect-ratio: 1;
@@ -727,7 +781,7 @@ h1, h2, h3, h4 {
     color: var(--text-primary);
 }
 
-/* Checked State on neomorphic days */
+/* Checked State for Weekday Checkboxes: Switches to recessed inset shadow state */
 .day-checkbox:checked + .day-label {
     box-shadow: inset 3px 3px 6px var(--shadow-dark), 
                 inset -3px -3px 6px var(--shadow-light);
@@ -764,3 +818,67 @@ h1, h2, h3, h4 {
 .btn-primary:active {
     color: var(--color-primary-light);
 }
+
+/* Transition overrides for smooth dark/light mode switches */
+body, .neomorphic-flat, .neomorphic-inset, .neomorphic-card, .btn-icon, .btn-text, .calendar-day-btn, .btn-toggle-done, .day-label, .switch-btn, .theme-switch-container {
+    transition: background-color var(--transition-normal), box-shadow var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
+}
+
+/* Mechanical "Hardware" Theme Switcher styling */
+.theme-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem;
+    border-radius: 16px;
+    background: var(--bg-color);
+}
+
+.switch-btn {
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.5rem 1.1rem;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.switch-btn.extruded {
+    box-shadow: 4px 4px 8px var(--shadow-dark), 
+                -4px -4px 8px var(--shadow-light);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.switch-btn.extruded:hover {
+    box-shadow: 2px 2px 4px var(--shadow-dark), 
+                -2px -2px 4px var(--shadow-light);
+    transform: translateY(-0.5px);
+}
+
+.switch-btn.sunken {
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), 
+                inset -3px -3px 6px var(--shadow-light);
+    border: 1px solid transparent;
+    color: var(--color-primary);
+    transform: translateY(0);
+    pointer-events: none;
+}
+
+/* Visual helper class for disabled future dates */
+.disabled-future-date {
+    opacity: 0.35 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+
+/* General display utility overrides */
+.hidden {
+    display: none !important;
+}
+
