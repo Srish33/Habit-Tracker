@@ -279,15 +279,22 @@ function renderMainCalendar() {
         dotsContainer.className = 'calendar-day-dots';
         
         const scheduledHabits = state.habits.filter(h => h.days.includes(dayOfWeek));
+        let completedCount = 0;
+        
         scheduledHabits.forEach(habit => {
             const dot = document.createElement('div');
             const isDone = habit.completedDates.includes(dateStr);
+            if (isDone) completedCount++;
             dot.className = `calendar-dot ${isDone ? 'completed' : ''}`;
             dotsContainer.appendChild(dot);
         });
 
         if (scheduledHabits.length > 0) {
             btn.appendChild(dotsContainer);
+            // If all habits scheduled for this day are completed, add 'all-completed' class
+            if (completedCount === scheduledHabits.length) {
+                btn.classList.add('all-completed');
+            }
         }
 
         // Click handler: Set selected date and update calendar/habit views
@@ -335,7 +342,14 @@ function renderTodayHabits() {
         const card = document.createElement('div');
         card.className = 'neomorphic-flat habit-card';
         
+        const btnContent = isCompleted 
+            ? `DONE <i data-lucide="check" class="btn-indicator-check"></i>` 
+            : `NOT DONE <span class="btn-indicator-dot"></span>`;
+
         card.innerHTML = `
+            <div class="habit-icon-box neomorphic-inset">
+                <i data-lucide="${getHabitIcon(habit.name)}"></i>
+            </div>
             <div class="habit-info-clickable">
                 <span class="habit-name">${escapeHTML(habit.name)}</span>
                 <span class="habit-time-badge">
@@ -343,7 +357,7 @@ function renderTodayHabits() {
                 </span>
             </div>
             <button class="btn-toggle-done ${isCompleted ? 'done' : ''}" data-id="${habit.id}">
-                ${isCompleted ? 'Done' : 'Not Done'}
+                ${btnContent}
             </button>
         `;
 
@@ -414,7 +428,14 @@ function renderSelectedDateHabits() {
         let toggleBtnClass = `btn-toggle-done ${isCompleted ? 'done' : ''}`;
         if (isFuture) toggleBtnClass += ' disabled-future-date';
 
+        const btnContent = isCompleted 
+            ? `DONE <i data-lucide="check" class="btn-indicator-check"></i>` 
+            : `NOT DONE <span class="btn-indicator-dot"></span>`;
+
         card.innerHTML = `
+            <div class="habit-icon-box neomorphic-inset">
+                <i data-lucide="${getHabitIcon(habit.name)}"></i>
+            </div>
             <div class="habit-info-clickable">
                 <span class="habit-name">${escapeHTML(habit.name)}</span>
                 <span class="habit-time-badge">
@@ -422,7 +443,7 @@ function renderSelectedDateHabits() {
                 </span>
             </div>
             <button class="${toggleBtnClass}" ${isFuture ? 'disabled' : ''} data-id="${habit.id}">
-                ${isCompleted ? 'Done' : 'Not Done'}
+                ${btnContent}
             </button>
         `;
 
@@ -763,11 +784,24 @@ function formatTime(timeStr) {
 
 // ================= INITIALIZATION & EVENT LISTENERS SETUP =================
 
-// ================= MECHANICAL HARDWARE THEME TOGGLE CONTROL =================
+// Helper function mapping habit name keywords to descriptive Lucide icons
+function getHabitIcon(habitName) {
+    const nameLower = habitName.toLowerCase();
+    if (nameLower.includes('read') || nameLower.includes('book') || nameLower.includes('page')) return 'book-open';
+    if (nameLower.includes('gym') || nameLower.includes('workout') || nameLower.includes('train') || nameLower.includes('exercise') || nameLower.includes('run')) return 'dumbbell';
+    if (nameLower.includes('sleep') || nameLower.includes('rest') || nameLower.includes('bed')) return 'moon';
+    if (nameLower.includes('meditate') || nameLower.includes('yoga') || nameLower.includes('breath') || nameLower.includes('mindful')) return 'activity';
+    if (nameLower.includes('water') || nameLower.includes('hydrate') || nameLower.includes('drink')) return 'droplets';
+    if (nameLower.includes('food') || nameLower.includes('eat') || nameLower.includes('diet') || nameLower.includes('meal')) return 'utensils';
+    return 'check-square'; // Premium default fallback
+}
+
+// ================= PREMIUM APPLE-STYLE SEGMENTED THEME TOGGLE CONTROL =================
 function initThemeControl() {
     const savedTheme = localStorage.getItem('habitflow_theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
+    const control = document.getElementById('theme-switch-control');
     const lightBtn = document.getElementById('toggle-light-btn');
     const darkBtn = document.getElementById('toggle-dark-btn');
     
@@ -776,34 +810,26 @@ function initThemeControl() {
         activeTheme = 'dark';
     }
     
-    // Apply initial state
+    // Apply initial state to body and slider thumb position
     if (activeTheme === 'dark') {
         document.body.classList.add('dark-mode');
-        if (lightBtn && darkBtn) {
-            lightBtn.className = 'switch-btn extruded';
-            darkBtn.className = 'switch-btn sunken';
-        }
+        if (control) control.classList.add('dark-active');
     } else {
         document.body.classList.remove('dark-mode');
-        if (lightBtn && darkBtn) {
-            lightBtn.className = 'switch-btn sunken';
-            darkBtn.className = 'switch-btn extruded';
-        }
+        if (control) control.classList.remove('dark-active');
     }
     
-    // Wire up events
+    // Wire up events for horizontal slider thumb transitions
     if (lightBtn && darkBtn) {
         lightBtn.addEventListener('click', () => {
             document.body.classList.remove('dark-mode');
-            lightBtn.className = 'switch-btn sunken';
-            darkBtn.className = 'switch-btn extruded';
+            if (control) control.classList.remove('dark-active');
             localStorage.setItem('habitflow_theme', 'light');
         });
         
         darkBtn.addEventListener('click', () => {
             document.body.classList.add('dark-mode');
-            lightBtn.className = 'switch-btn extruded';
-            darkBtn.className = 'switch-btn sunken';
+            if (control) control.classList.add('dark-active');
             localStorage.setItem('habitflow_theme', 'dark');
         });
     }

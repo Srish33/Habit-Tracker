@@ -1,56 +1,62 @@
 /* ================= GLOBAL RESETS & THEME VARIABLES ================= */
-/* Central CSS Custom Properties (Variables) defining color palettes, neomorphic shadows, typography, and animation timings */
 :root {
-    /* Main Background & Text Color Hierarchy */
-    --bg-color: #e0e8f0;             /* Soft grayish-blue background tailored for neomorphic shadows */
-    --text-primary: #3a4759;         /* Dark slate tone for high-contrast, legible headings & primary text */
-    --text-secondary: #6b7a90;       /* Medium slate tone for subtitles, labels, and icons */
-    --text-light: #8e9eab;           /* Light muted slate for placeholder text and disabled states */
+    /* Soft Light Mode Palette (Warm/Comfortable off-white) */
+    --bg-color: #eef1f4;
+    --card-bg: #eef1f4;
+    --text-primary: #3a4759;
+    --text-secondary: #6b7a90;
+    --text-light: #9ca3af;
     
-    /* Dual Shadows for Neomorphic (Soft 3D) Effect */
-    --shadow-light: #ffffff;         /* Highlights cast on upper-left edges (simulates top-left light source) */
-    --shadow-dark: #b5c3d0;          /* Soft drop shadows cast on lower-right edges */
+    /* Soft Neomorphic Shadows for Light Mode */
+    --shadow-light: #ffffff;
+    --shadow-dark: #d1d5db;
+    --border-glow: rgba(255, 255, 255, 0.7);
+    --border-glow-dark: rgba(0, 0, 0, 0.02);
     
-    /* Harmonious State & Accent Colors */
-    --color-primary: #6c7e96;        /* Primary accent slate-blue */
-    --color-primary-light: #8295ad;  /* Lighter blue for hover states */
-    --color-success: #7ca88a;        /* Soft sage green for completed habits and positive indicators */
-    --color-success-dark: #628e70;   /* Darker sage green for inset shadow depth on completed items */
-    --color-danger: #c78383;         /* Soft muted rose red for destructive actions (e.g. Delete button) */
-    --color-danger-dark: #ac6767;    /* Darker rose shade for active state of delete button */
-    --color-today: #738ca6;          /* Distinct indicator tint for today's date highlight */
+    /* Accent Tones */
+    --color-primary: #6c7e96;
+    --color-primary-light: #8295ad;
+    --color-success: #7ca88a;             /* Desaturated sage green */
+    --color-success-dark: #628e70;
+    --color-danger: #c78383;              /* Dusty rose danger */
+    --color-danger-dark: #ac6767;
+    --color-today: #738ca6;
     
-    /* Smooth Transition Duration Utilities */
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s ease;
+    /* Animation Timings */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark Mode Variables Override */
+/* Deep Charcoal Neomorphic Dark Mode Palette */
 body.dark-mode {
-    --bg-color: #1b1e23;
+    --bg-color: #17191d;
+    --card-bg: #1e2127;
     --text-primary: #e2e8f0;
     --text-secondary: #94a3b8;
-    --text-light: #64748b;
-    --shadow-light: #262a30;
-    --shadow-dark: #101216;
+    --text-light: #4b5563;
+    
+    /* Soft Neomorphic Shadows for Dark Mode */
+    --shadow-light: rgba(255, 255, 255, 0.035);
+    --shadow-dark: rgba(0, 0, 0, 0.5);
+    --border-glow: rgba(255, 255, 255, 0.04);
+    --border-glow-dark: rgba(0, 0, 0, 0.15);
+    
     --color-primary: #8295ad;
     --color-primary-light: #9db2cc;
-    --color-success: #5c886a;
+    --color-success: #5e8b6e;
     --color-success-dark: #3f6048;
     --color-danger: #af6b6b;
     --color-danger-dark: #814646;
 }
 
-/* Universal Reset: Standardizes box sizing, removes default margins/paddings, sets default font */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
-    -webkit-tap-highlight-color: transparent; /* Removes touch highlight box on mobile webkit browsers */
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Base Body Styling: Full viewport height container centered horizontally with horizontal overflow hidden */
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
@@ -62,73 +68,51 @@ body {
     transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-/* Headings Typography: Uses 'Outfit' geometric font for modern aesthetic headers */
 h1, h2, h3, h4 {
     font-family: 'Outfit', sans-serif;
     color: var(--text-primary);
     font-weight: 600;
 }
 
-/* ================= NEOMORPHIC UTILITY CLASSES ================= */
-
-/* 1. Neomorphic Flat Surface: Extruded card/button floating above background using dual light/dark shadows */
+/* ================= NEOMORPHIC UI BLOCKS ================= */
 .neomorphic-flat {
-    background: var(--bg-color);
+    background: var(--card-bg);
     box-shadow: 6px 6px 12px var(--shadow-dark), 
                 -6px -6px 12px var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle top-left light border highlight */
+    border: 1px solid var(--border-glow);
     border-radius: 16px;
-    transition: box-shadow var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
 }
 
-/* Hover state: Slightly shrinks outer shadows to simulate floating closer to surface */
-.neomorphic-flat:hover {
-    box-shadow: 4px 4px 8px var(--shadow-dark), 
-                -4px -4px 8px var(--shadow-light);
-    transform: translateY(-1px);
-}
-
-/* Active (Pressed) state: Inverts outer shadows to inset inner shadows, creating physical push-button feedback */
-.neomorphic-flat:active {
-    box-shadow: inset 4px 4px 8px var(--shadow-dark), 
-                inset -4px -4px 8px var(--shadow-light);
-    transform: translateY(0);
-}
-
-/* 2. Neomorphic Inset Surface: Sunken / carved recessed surface for input fields and stat boxes */
 .neomorphic-inset {
-    background: var(--bg-color);
+    background: var(--card-bg);
     box-shadow: inset 4px 4px 8px var(--shadow-dark), 
                 inset -4px -4px 8px var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-glow-dark);
     border-radius: 12px;
-    outline: none;
-    transition: box-shadow var(--transition-fast);
 }
 
-/* 3. Neomorphic Large Container Card: Generous padding and prominent soft elevation shadows */
 .neomorphic-card {
-    background: var(--bg-color);
+    background: var(--card-bg);
     box-shadow: 8px 8px 16px var(--shadow-dark), 
                 -8px -8px 16px var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border-glow);
     border-radius: 20px;
     padding: 1.5rem;
 }
 
-/* ================= APP LAYOUT CONTAINER ================= */
+/* ================= APP LAYOUT ================= */
 .app-container {
     width: 100%;
     max-width: 1100px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
-/* App Header & Branding */
+/* Header Grid Row formatting */
 .app-header {
-    padding-bottom: 1rem;
     width: 100%;
+    padding-bottom: 0.5rem;
 }
 
 .header-main-row {
@@ -137,72 +121,120 @@ h1, h2, h3, h4 {
     align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem;
-    width: 100%;
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
 }
 
 .logo-icon {
-    width: 45px;
-    height: 45px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
-.icon-primary {
-    color: var(--color-primary);
-    width: 22px;
-    height: 22px;
+.logo-icon i {
+    width: 24px;
+    height: 24px;
+    color: var(--color-success);
 }
 
-.icon-secondary {
-    color: var(--text-secondary);
-    width: 18px;
-    height: 18px;
-}
-
-.app-header h1 {
-    font-size: 2rem;
-    font-weight: 800;
+.brand h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
     letter-spacing: -0.5px;
+    line-height: 1.2;
 }
 
 .subtitle {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
-/* Screen View Transition Logic */
+/* ================= APPLE-STYLE SEGMENTED SWITCH ================= */
+.theme-segmented-control {
+    position: relative;
+    display: flex;
+    width: 155px;
+    height: 38px;
+    padding: 3px;
+    border-radius: 19px;
+    background: var(--card-bg);
+    user-select: none;
+}
+
+.theme-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 74px;
+    height: 30px;
+    border-radius: 15px;
+    background: var(--card-bg);
+    box-shadow: 2px 2px 5px var(--shadow-dark), 
+                -2px -2px 5px var(--shadow-light);
+    border: 1px solid var(--border-glow);
+    transition: transform var(--transition-normal);
+    z-index: 1;
+}
+
+/* Toggle transition to Dark segment */
+.theme-segmented-control.dark-active .theme-thumb {
+    transform: translateX(75px);
+}
+
+.theme-label-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    z-index: 2;
+    transition: color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+/* Brighten active state labels */
+.theme-segmented-control:not(.dark-active) #toggle-light-btn,
+.theme-segmented-control.dark-active #toggle-dark-btn {
+    color: var(--text-primary);
+}
+
+/* ================= SCREEN TRANSITIONS ================= */
 .screen {
     opacity: 1;
     transition: opacity var(--transition-normal);
 }
 
-/* Utility class to instantly hide screens when switching views */
 .screen.hidden {
     display: none !important;
     opacity: 0;
 }
 
-/* ================= DASHBOARD SCREEN GRID ================= */
-/* Asymmetric 2-column layout: Calendar section (1.2fr width) and Habits list column (1fr width) */
+/* ================= DASHBOARD LAYOUT GRID ================= */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1.25fr 1fr;
     gap: 2.5rem;
 }
 
-/* Mobile & Tablet Responsive Fallback: Stacks grid columns vertically on screens narrower than 900px */
 @media (max-width: 900px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
     }
 }
 
@@ -210,7 +242,6 @@ h1, h2, h3, h4 {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    margin-bottom: 2rem;
 }
 
 .section-header {
@@ -221,72 +252,76 @@ h1, h2, h3, h4 {
 }
 
 .section-header h2, .section-header h3 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
-/* ================= MONTHLY CALENDAR STYLING ================= */
+/* ================= MONTHLY CALENDAR DESIGN ================= */
 .calendar-controls {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .calendar-title {
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
-    font-size: 1rem;
-    min-width: 110px;
+    font-size: 0.95rem;
+    min-width: 100px;
     text-align: center;
+    color: var(--text-primary);
 }
 
-/* Circular Neomorphic Icon Buttons (Month navigation chevrons) */
 .btn-icon {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    color: var(--text-primary);
+    color: var(--text-secondary);
+    outline: none;
 }
 
 .btn-icon i {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 .calendar-card {
     padding: 1.5rem;
+    border-radius: 24px;
 }
 
-/* 7-Column Weekday Header Grid (Monday through Sunday) */
 .calendar-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
 }
 
-/* 7-Column Days Cell Grid */
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0.6rem;
+    gap: 0.75rem;
 }
 
-/* Individual Calendar Day Button: Square aspect ratio with neomorphic depth */
+/* Calendar cell buttons styling */
 .calendar-day-btn {
     aspect-ratio: 1;
-    border: none;
-    background: var(--bg-color);
-    border-radius: 10px;
+    border: 1px solid var(--border-glow);
+    background: var(--card-bg);
+    border-radius: 12px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
     position: relative;
@@ -296,62 +331,71 @@ h1, h2, h3, h4 {
     justify-content: center;
     box-shadow: 3px 3px 6px var(--shadow-dark), 
                 -3px -3px 6px var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.4);
     transition: all var(--transition-fast);
+    outline: none;
 }
 
 .calendar-day-btn:hover {
     box-shadow: 2px 2px 4px var(--shadow-dark), 
                 -2px -2px 4px var(--shadow-light);
+    transform: translateY(-0.5px);
 }
 
 .calendar-day-btn:active {
     box-shadow: inset 2px 2px 4px var(--shadow-dark), 
                 inset -2px -2px 4px var(--shadow-light);
+    transform: translateY(0);
 }
 
-/* Blank spacer element to align the 1st of the month under the correct weekday column */
 .calendar-day-empty {
     aspect-ratio: 1;
     pointer-events: none;
 }
 
-/* Selected Date Highlight State: Sunken inner shadow highlight */
+/* Selected Date Outlined glow */
 .calendar-day-btn.selected {
-    box-shadow: inset 3px 3px 6px var(--shadow-dark), 
-                inset -3px -3px 6px var(--shadow-light);
+    box-shadow: inset 2px 2px 5px var(--shadow-dark), 
+                inset -2px -2px 5px var(--shadow-light);
+    border: 1.5px solid var(--color-primary);
     font-weight: 700;
-    border: 1px solid var(--text-light);
 }
 
-/* Today's Date Highlight State: Primary colored text with a small dot below */
-.calendar-day-btn.today {
-    color: var(--color-primary);
-    font-weight: 700;
-    position: relative;
+/* Green Glow outline when selected day habits are completed */
+.calendar-day-btn.selected.all-completed {
+    border: 1.5px solid var(--color-success);
+    box-shadow: inset 2px 2px 5px var(--shadow-dark), 
+                inset -2px -2px 5px var(--shadow-light),
+                0 0 10px rgba(94, 166, 114, 0.2);
 }
-.calendar-day-btn.today::after {
+
+/* Today's Cell */
+.calendar-day-btn.today {
+    color: var(--color-success);
+    font-weight: 700;
+}
+
+.calendar-day-btn.today::before {
     content: '';
     position: absolute;
-    bottom: 5px;
-    width: 4px;
-    height: 4px;
+    top: 5px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background-color: var(--color-primary);
+    background-color: var(--color-success);
 }
 
-/* Mini Dot Container for scheduled/completed habit indicators on calendar cells */
+/* Scheduled habit dots at bottom of cell */
 .calendar-day-dots {
     display: flex;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
     position: absolute;
-    bottom: 6px;
+    bottom: 8px;
     width: 80%;
     height: 4px;
 }
 
-/* Incomplete Habit Indicator Dot */
 .calendar-dot {
     width: 4px;
     height: 4px;
@@ -359,56 +403,82 @@ h1, h2, h3, h4 {
     background-color: var(--text-light);
 }
 
-/* Completed Habit Indicator Dot (Green) */
 .calendar-dot.completed {
     background-color: var(--color-success);
 }
 
-/* Heatmap Calendar Cell (Habit detail screen completion history) */
+/* Heatmap completion grid cells (detail view) */
 .detail-view-calendar .calendar-day-btn.completed {
     background-color: var(--color-success);
     color: white;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: inset 3px 3px 6px var(--color-success-dark), 
                 -1px -1px 3px var(--shadow-light);
 }
+
 .detail-view-calendar .calendar-day-btn.completed:hover {
     box-shadow: inset 2px 2px 4px var(--color-success-dark);
 }
 
-/* ================= HABIT LIST ITEMS ================= */
+/* ================= HABITS LISTS & CARDS ================= */
 .habits-column {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.8rem;
 }
 
 .habits-list {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    min-height: 80px;
+    gap: 1rem;
 }
 
-/* Habit Card Item */
+/* Card refinement matching visual mockup */
 .habit-card {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 1.4rem;
+    gap: 1.2rem;
+    padding: 1rem 1.4rem;
     cursor: pointer;
+    border-radius: 20px;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.habit-card:hover {
+    box-shadow: 4px 4px 8px var(--shadow-dark), 
+                -4px -4px 8px var(--shadow-light);
+}
+
+/* Left-aligned Icon Container Box inside Card */
+.habit-icon-box {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-success);
+    background: var(--card-bg);
+    box-shadow: inset 2px 2px 4px var(--shadow-dark), 
+                inset -2px -2px 4px var(--shadow-light);
+    border: 1px solid var(--border-glow-dark);
+}
+
+.habit-icon-box i {
+    width: 20px;
+    height: 20px;
 }
 
 .habit-info-clickable {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    padding-right: 1rem;
+    gap: 0.25rem;
 }
 
 .habit-name {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
 }
@@ -416,62 +486,132 @@ h1, h2, h3, h4 {
 .habit-time-badge {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.35rem;
     font-size: 0.8rem;
     color: var(--text-secondary);
 }
 
-/* Interactive Habit Done/Not Done Toggle Button with Tactile Physical Press Effect */
+.habit-time-badge i {
+    width: 14px;
+    height: 14px;
+}
+
+/* ================= DESATURATED TOGGLE BUTTONS ================= */
 .btn-toggle-done {
-    border: none;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 700;
-    padding: 0.6rem 1.1rem;
-    border-radius: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: 105px;
-    text-align: center;
     display: flex;
-    justify-content: center;
     align-items: center;
-    box-shadow: 4px 4px 8px var(--shadow-dark), 
-                -4px -4px 8px var(--shadow-light);
-    background-color: var(--bg-color);
-    color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    justify-content: center;
+    gap: 0.6rem;
+    width: 125px;
+    height: 38px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 12px;
+    border: 1px solid var(--border-glow);
+    cursor: pointer;
+    outline: none;
     transition: all var(--transition-fast);
 }
 
-.btn-toggle-done:hover {
+/* Incomplete (Raised Capsule) State */
+.btn-toggle-done:not(.done) {
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    box-shadow: 3px 3px 6px var(--shadow-dark), 
+                -3px -3px 6px var(--shadow-light);
+}
+
+.btn-toggle-done:not(.done):hover {
     box-shadow: 2px 2px 4px var(--shadow-dark), 
                 -2px -2px 4px var(--shadow-light);
 }
 
-/* Pressed Green State when Habit is Completed */
+.btn-indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-light);
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.25);
+    opacity: 0.8;
+}
+
+/* Completed (Sunken Green Capsule) State */
 .btn-toggle-done.done {
-    box-shadow: inset 4px 4px 8px var(--color-success-dark),
-                inset -2px -2px 6px rgba(255, 255, 255, 0.2),
-                2px 2px 5px var(--shadow-dark);
-    background-color: var(--color-success);
+    background: var(--color-success);
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.btn-toggle-done.done:hover {
     box-shadow: inset 3px 3px 6px var(--color-success-dark),
-                2px 2px 4px var(--shadow-dark);
+                inset -2px -2px 5px rgba(255, 255, 255, 0.15),
+                1px 1px 2px rgba(0, 0, 0, 0.08);
+    border-color: transparent;
 }
 
-/* Empty State Container (Dashed border placeholder when no habits are present) */
+.btn-indicator-check {
+    width: 14px;
+    height: 14px;
+    color: white;
+}
+
+/* ================= INLINE HEADER ADD HABIT BUTTON ================= */
+.add-habit-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--color-success);
+    color: white;
+    box-shadow: 3px 3px 6px var(--shadow-dark), 
+                -3px -3px 6px var(--shadow-light);
+    transition: all var(--transition-fast);
+    outline: none;
+}
+
+.add-habit-btn i {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-fast);
+}
+
+.add-habit-btn:hover {
+    box-shadow: 2px 2px 4px var(--shadow-dark), 
+                -2px -2px 4px var(--shadow-light);
+    transform: translateY(-0.5px);
+}
+
+.add-habit-btn:hover i {
+    transform: rotate(90deg);
+}
+
+.add-habit-btn:active {
+    box-shadow: inset 2px 2px 4px var(--color-success-dark),
+                inset -2px -2px 4px rgba(255, 255, 255, 0.2);
+    transform: translateY(0);
+}
+
+/* Dark Mode Add button override: dark neomorphic with green plus sign */
+body.dark-mode .add-habit-btn {
+    background: var(--card-bg);
+    color: var(--color-success);
+}
+
+body.dark-mode .add-habit-btn:active {
+    box-shadow: inset 2px 2px 4px var(--shadow-dark),
+                inset -2px -2px 4px var(--shadow-light);
+}
+
+/* ================= EMPTY STATE CONTAINER ================= */
 .empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    padding: 2rem;
+    padding: 2.2rem;
     border: 2px dashed var(--shadow-dark);
     border-radius: 16px;
     color: var(--text-light);
@@ -479,45 +619,15 @@ h1, h2, h3, h4 {
 }
 
 .empty-state i {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
 }
 
 .empty-state p {
     font-size: 0.9rem;
 }
 
-/* ================= FLOATING ACTION BUTTON (FAB) ================= */
-/* Fixed floating button at lower right to trigger the Add Habit modal */
-.fab-btn {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    z-index: 99;
-}
-
-.fab-btn i {
-    width: 28px;
-    height: 28px;
-    transition: transform var(--transition-fast);
-}
-
-/* Hover rotation animation on plus icon */
-.fab-btn:hover i {
-    transform: rotate(90deg);
-}
-
-/* ================= HABIT DETAIL SCREEN STYLING ================= */
+/* ================= DETAIL VIEW SCREEN ================= */
 .detail-header-nav {
     display: flex;
     justify-content: space-between;
@@ -528,13 +638,15 @@ h1, h2, h3, h4 {
 .btn-text {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1.2rem;
-    border: none;
-    background: var(--bg-color);
+    gap: 0.6rem;
+    padding: 0.6rem 1.3rem;
+    border: 1px solid var(--border-glow);
+    background: var(--card-bg);
     font-weight: 600;
+    font-size: 0.9rem;
     color: var(--text-primary);
     cursor: pointer;
+    outline: none;
 }
 
 .detail-actions {
@@ -552,14 +664,14 @@ h1, h2, h3, h4 {
 
 .detail-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1.25fr 1fr;
     gap: 2.5rem;
 }
 
 @media (max-width: 900px) {
     .detail-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
     }
 }
 
@@ -572,6 +684,7 @@ h1, h2, h3, h4 {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    border-radius: 24px;
 }
 
 .habit-detail-meta {
@@ -581,12 +694,12 @@ h1, h2, h3, h4 {
 }
 
 .detail-title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 700;
     letter-spacing: -0.5px;
+    color: var(--text-primary);
 }
 
-/* 2-Column Statistics Display Grid (Streak and Lifetime Count) */
 .stats-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -597,13 +710,13 @@ h1, h2, h3, h4 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
-    border-radius: 12px;
+    padding: 1.1rem;
+    border-radius: 14px;
 }
 
 .stat-num {
     font-family: 'Outfit', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     font-weight: 700;
     color: var(--color-primary);
 }
@@ -619,17 +732,18 @@ h1, h2, h3, h4 {
     height: 2px;
     background: var(--shadow-dark);
     box-shadow: 0 1px 0 var(--shadow-light);
-    margin: 0.5rem 0;
+    margin: 0.4rem 0;
+    opacity: 0.5;
 }
 
 .info-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .info-group h4 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--text-light);
@@ -641,30 +755,25 @@ h1, h2, h3, h4 {
     color: var(--text-primary);
 }
 
-.schedule-badge-container {
-    margin-top: 0.3rem;
-}
-
 .schedule-banner {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 0.8rem 1rem;
-    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    border-radius: 14px;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-primary);
 }
 
-/* ================= MODAL DIALOG STYLING ================= */
-/* Full screen translucent background backdrop overlay with modern blur filter */
+/* ================= MODAL DIALOGS ================= */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(224, 232, 240, 0.7);
+    background: rgba(23, 25, 29, 0.4);
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
@@ -675,27 +784,29 @@ h1, h2, h3, h4 {
     transition: opacity var(--transition-normal);
 }
 
+body.dark-mode .modal-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
 .modal-overlay.hidden {
     display: none !important;
     opacity: 0;
 }
 
-/* Modal Card Box with spring scaling entry animation */
 .modal-card {
     width: 100%;
-    max-width: 500px;
-    padding: 2rem;
-    border-radius: 24px;
+    max-width: 480px;
+    padding: 2.2rem;
+    border-radius: 28px;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     animation: modalScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Keyframes scale up entrance animation */
 @keyframes modalScaleUp {
     from {
-        transform: scale(0.9);
+        transform: scale(0.92);
         opacity: 0;
     }
     to {
@@ -711,34 +822,33 @@ h1, h2, h3, h4 {
 }
 
 .modal-header h3 {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
 }
 
 .modal-body {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.25rem;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.55rem;
 }
 
 .form-group label {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-secondary);
 }
 
-/* Form Inputs & Textarea reset to transparent inside neomorphic-inset fields */
 .form-group input[type="text"],
 .form-group textarea,
 .form-group input[type="time"] {
     width: 100%;
-    padding: 0.8rem 1rem;
-    border: none;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--border-glow-dark);
     font-size: 0.95rem;
     color: var(--text-primary);
 }
@@ -748,20 +858,18 @@ h1, h2, h3, h4 {
     color: var(--text-light);
 }
 
-/* Weekday Selector Checkbox Grid */
+/* Weekday Selection Grid */
 .weekday-selector {
     display: flex;
     justify-content: space-between;
-    gap: 0.4rem;
+    gap: 0.5rem;
     margin-top: 0.2rem;
 }
 
-/* Hides native browser checkboxes so custom labels can act as toggle buttons */
 .day-checkbox {
     display: none;
 }
 
-/* Custom Day Label behaving as interactive neomorphic button */
 .day-label {
     flex: 1;
     aspect-ratio: 1;
@@ -772,7 +880,7 @@ h1, h2, h3, h4 {
     font-weight: 700;
     cursor: pointer;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--border-glow);
     color: var(--text-secondary);
     user-select: none;
 }
@@ -781,12 +889,12 @@ h1, h2, h3, h4 {
     color: var(--text-primary);
 }
 
-/* Checked State for Weekday Checkboxes: Switches to recessed inset shadow state */
 .day-checkbox:checked + .day-label {
-    box-shadow: inset 3px 3px 6px var(--shadow-dark), 
-                inset -3px -3px 6px var(--shadow-light);
+    box-shadow: inset 2px 2px 4px var(--shadow-dark), 
+                inset -2px -2px 4px var(--shadow-light);
     color: var(--color-primary);
     font-weight: 800;
+    border-color: transparent;
 }
 
 .modal-footer {
@@ -798,7 +906,7 @@ h1, h2, h3, h4 {
 
 .modal-footer button {
     padding: 0.8rem 1.6rem;
-    border: none;
+    border: 1px solid var(--border-glow);
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -806,12 +914,12 @@ h1, h2, h3, h4 {
 }
 
 .btn-secondary {
-    background-color: var(--bg-color);
+    background-color: var(--card-bg);
     color: var(--text-secondary);
 }
 
 .btn-primary {
-    background-color: var(--bg-color);
+    background-color: var(--card-bg);
     color: var(--color-primary);
 }
 
@@ -819,66 +927,17 @@ h1, h2, h3, h4 {
     color: var(--color-primary-light);
 }
 
-/* Transition overrides for smooth dark/light mode switches */
-body, .neomorphic-flat, .neomorphic-inset, .neomorphic-card, .btn-icon, .btn-text, .calendar-day-btn, .btn-toggle-done, .day-label, .switch-btn, .theme-switch-container {
+/* ================= UTILITY CLASSES & TRANSITIONS ================= */
+body, .neomorphic-flat, .neomorphic-inset, .neomorphic-card, .btn-icon, .btn-text, .calendar-day-btn, .btn-toggle-done, .day-label, .theme-label-btn, .theme-thumb, .theme-segmented-control, .habit-card, .habit-icon-box {
     transition: background-color var(--transition-normal), box-shadow var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
 }
 
-/* Mechanical "Hardware" Theme Switcher styling */
-.theme-switch-container {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem;
-    border-radius: 16px;
-    background: var(--bg-color);
-}
-
-.switch-btn {
-    border: none;
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    padding: 0.5rem 1.1rem;
-    border-radius: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: var(--bg-color);
-    color: var(--text-secondary);
-    transition: all var(--transition-fast);
-}
-
-.switch-btn.extruded {
-    box-shadow: 4px 4px 8px var(--shadow-dark), 
-                -4px -4px 8px var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.switch-btn.extruded:hover {
-    box-shadow: 2px 2px 4px var(--shadow-dark), 
-                -2px -2px 4px var(--shadow-light);
-    transform: translateY(-0.5px);
-}
-
-.switch-btn.sunken {
-    box-shadow: inset 3px 3px 6px var(--shadow-dark), 
-                inset -3px -3px 6px var(--shadow-light);
-    border: 1px solid transparent;
-    color: var(--color-primary);
-    transform: translateY(0);
-    pointer-events: none;
-}
-
-/* Visual helper class for disabled future dates */
 .disabled-future-date {
     opacity: 0.35 !important;
     pointer-events: none !important;
     cursor: not-allowed !important;
 }
 
-/* General display utility overrides */
 .hidden {
     display: none !important;
 }
-

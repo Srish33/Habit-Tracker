@@ -35,10 +35,11 @@
                         <p class="subtitle">Shape your daily routine, softly.</p>
                     </div>
                 </div>
-                <!-- Mechanical "Hardware" theme switch -->
-                <div class="theme-switch-container neomorphic-inset">
-                    <button type="button" id="toggle-light-btn" class="switch-btn sunken">Light</button>
-                    <button type="button" id="toggle-dark-btn" class="switch-btn extruded">Dark</button>
+                <!-- Premium Segmented Theme Switch -->
+                <div id="theme-switch-control" class="theme-segmented-control neomorphic-inset">
+                    <div id="theme-slider-thumb" class="theme-thumb neomorphic-flat"></div>
+                    <button type="button" id="toggle-light-btn" class="theme-label-btn">Light</button>
+                    <button type="button" id="toggle-dark-btn" class="theme-label-btn">Dark</button>
                 </div>
             </div>
         </header>
@@ -104,8 +105,11 @@
 
                         <!-- Today's Focus Checklist Section -->
                         <div id="todays-focus-section" class="card-section">
-                            <div class="section-header">
+                            <div class="section-header today-focus-header">
                                 <h3>Today's Focus</h3>
+                                <button id="add-habit-fab" class="add-habit-btn neomorphic-flat" aria-label="Add Habit">
+                                    <i data-lucide="plus"></i>
+                                </button>
                             </div>
                             <!-- List container for today's habits checklist with interactive completion toggles -->
                             <div id="todays-habits" class="habits-list">
@@ -118,11 +122,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Floating Action Button (FAB): Positioned fixed at bottom-right to open new habit modal -->
-                <button id="add-habit-fab" class="fab-btn neomorphic-flat" aria-label="Add Habit">
-                    <i data-lucide="plus"></i>
-                </button>
             </section>
 
             <!-- ================= HABIT DETAIL SCREEN ================= -->
